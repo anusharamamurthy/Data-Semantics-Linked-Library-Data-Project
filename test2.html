@@ -1,0 +1,33 @@
+<html>
+<head>
+	<script src="https://code.jquery.com/jquery-1.12.3.js" integrity="sha256-1XMpEtA4eKXNNpXcJ1pmMPs8JV+nwLdEqwiJeCQEkyc=" crossorigin="anonymous"></script>
+	<script type="text/javascript">
+	$(document).ready(function()
+	{
+
+		$("#do_query").on("click",function(e)
+		{
+			var query = $("#query").val();
+		var url_encoded_query = encodeURI(query);
+
+		//http://localhost:3030/Iowa_Library/query
+		$.get("http://localhost:3030/Iowa_Library?query="+query+"&format=json",function(data)
+		{
+			$("#results").text(JSON.stringify(data));
+		})
+		})
+
+		
+	})
+
+	</script>
+</head>
+<body>
+<h1>Welcome to the Fuseki query viewer application!</h1>
+
+<input type="textbox" id="query" /><br />
+<button type="button" id="do_query">Click Here</button>
+<div id="results">
+</div>
+</body>
+</html>
