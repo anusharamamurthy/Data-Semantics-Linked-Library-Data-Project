@@ -1,0 +1,46 @@
+{
+  "head": {
+    "vars": [ "relatedworks" , "translation" ]
+  } ,
+  "results": {
+    "bindings": [
+      {
+        "relatedworks": { "type": "literal" , "value": "Beaumarchais, Pierre Augustin Caron de, 1732-1799 Mariage de Figaro." } ,
+        "translationOf": { "type": "literal" , "value": "Mozart, Wolfgang Amadeus, 1756-1791.Nozze di Figaro." }
+      } ,
+      {
+        "relatedworks": { "type": "literal" , "value": "Da Ponte, Lorenzo, 1749-1838 Nozze di Figaro." } ,
+        "translationOf": { "type": "literal" , "value": "Mozart, Wolfgang Amadeus, 1756-1791.Nozze di Figaro." }
+      }
+
+      {
+        "Provider": { "type": "literal" , "value": "Seattle : Seattle Printing & Pub. Co., c1952" } ,
+        "Dimensions": { "type": "literal" , "value": "19 cm." } ,
+        "ModeOfIssue": { "type": "literal" , "value": "single unit" } ,
+        "Extent": { "type": "literal" , "value": "95 p." }
+      }
+
+      {
+        "PeopleAssociated": { "type": "literal" , "value": "Mozart, Wolfgang Amadeus, 1756-1791." }
+      } ,
+      {
+        "PeopleAssociated": { "type": "literal" , "value": "Da Ponte, Lorenzo,  1749-1838" }
+      } ,
+      {
+        "PeopleAssociated": { "type": "literal" , "value": "Beaumarchais, Pierre Augustin Caron de,   1732-1799 " }
+      }
+
+      {
+        "TopicName": { "type": "literal" , "value": "Operas--Librettos" }
+      }
+
+      {
+        "AssociatedOrganization": { "type": "literal" , "value": "University of Iowa" }
+      }
+
+      {
+        "Location": { "type": "literal" , "value": "Rita Benton Music Library" }
+      }
+    ]
+  }
+}
