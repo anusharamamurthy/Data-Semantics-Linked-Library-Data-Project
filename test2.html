@@ -11,7 +11,7 @@
 		var url_encoded_query = encodeURI(query);
 
 		//http://localhost:3030/Iowa_Library/query
-		$.get("http://localhost:3030/Iowa_Library?query="+query+"&format=json",function(data)
+		$.get("http://localhost:3030/Iowa_Library?query="+query+"&format=JSON",function(data)
 		{
 			$("#results").text(JSON.stringify(data));
 		})
