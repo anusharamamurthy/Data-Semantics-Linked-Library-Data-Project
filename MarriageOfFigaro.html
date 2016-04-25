@@ -24,7 +24,11 @@ $(document).ready(function()
 		$("#do_query").on("click",function(e)
 		{
 			//var query1 = $("#query").val();
-			var query = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns%23> prefix rdfs: <http://www.w3.org/2000/01/rdf-schema%23> prefix bf: <http://bibframe.org/vocab/> select distinct ?Title ?About where { ?x rdf:type bf:InstanceTitle. ?x bf:mainTitle ?Title. ?x rdfs:label ?About. }";
+			//var query = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> prefix rdfs: <http://www.w3.org/2000/01/rdf-schema%23> prefix bf: <http://bibframe.org/vocab/> select distinct ?Title ?Title_Statement where { ?x rdf:type bf:InstanceTitle. ?x bf:mainTitle ?Title. ?x rdfs:label ?Title_Statement. }";
+
+			var query = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>  prefix relators: <http://id.loc.gov/vocabulary/relators> prefix bf: <http://bibframe.org/vocab/> prefix madsrdf: <http://www.loc.gov/mads/rdf/v1#> select ?Translation_Of  ?Related_Works where { ?instance rdf:type bf:Instance. ?instance bf:instanceOf ?instanceof. ?instanceof bf:translationOf ?translationof. ?translationof madsrdf:authoritativeLabel ?Translation_Of. ?instanceof bf:relatedWork ?relatedWork. ?relatedWork bf:authorizedAccessPoint ?Related_Works. }";
+
+			query = query.replace(/#/g,"%23");
 			var url_encoded_query = encodeURI(query);
 
 		//http://localhost:3030/Iowa_Library/query
@@ -40,17 +44,26 @@ $(document).ready(function()
 			for(var i=0;i<header.length;i++)
 			{
 				var title = header[i];
+				var str = title.replace("_"," ");
 				//var tableTag = "";
 				//tableTag = tableTag + "<tr>"
-				tableTag = tableTag+"<td class=\"col-md-4\"><kbd>"+title+"</kbd></td>";
+				tableTag = tableTag+"<td class=\"col-md-4\"><kbd>"+str+"</kbd></td>";
 				tableTag = tableTag + "<td><span>";
 				tableTag = tableTag + "<ul>";
 				for(var j=0;j<list_value.length;j++)
 				{
 				    
 					var value = data.results.bindings[j][title].value;
+
+					if(j == 0)
+					{
+						tableTag = tableTag + "<li>"+value+"</li><br> ";
+					}
 					// tableTag = tableTag + "<td><span>"+value+", "; Since we want all values to come in one column
-					tableTag = tableTag + "<li>"+value+"</li><br> ";
+					if(j > 0 && value != data.results.bindings[j-1][title].value)
+					{
+						tableTag = tableTag + "<li>"+value+"</li><br> ";
+					}
 				}
 				
 			//	tableTag = tableTag+"</span></td></tr>";   for multiple main_title values
@@ -86,8 +99,7 @@ $(document).ready(function()
 
 <div class="jumbotron">
     <h1 class ="text-center">The Marriage of Figaro (Opera)</h1>
-    <p class = "container">Le Nozze di Figaro : The marriage of Figaro = Die Hochzeit des Figaro = Les noces de Figaro : K. 492, Wolfgang Amadeus Mozart ; commedia per musica in quattro atti di Lorenzo Da Ponte
-</p> 
+    <p class = "container" align="center">Mozart, Wolfgang Amadeus, 1756-1791. Nozze di Figaro. Libretto. English</p> 
 <div>
 <div class="container">
     <table class="table table-hover" id="results">
@@ -103,7 +115,7 @@ $(document).ready(function()
 
 <!-- <input type="textbox" id="query" /><br /> -->
 <center> 
-	<button type="button" id="do_query" class="btn btn-primary btn-lg"> Show LOD </button> 
+	<button type="button" id="do_query" class="btn btn-primary btn-lg"> Linked Open Data </button> 
 	<p></p>
 </center>
 
