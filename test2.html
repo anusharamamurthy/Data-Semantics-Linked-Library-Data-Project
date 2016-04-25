@@ -11,24 +11,32 @@
 		var url_encoded_query = encodeURI(query);
 
 		//http://localhost:3030/Iowa_Library/query
-		$.get("http://localhost:3030/Iowa_Library?query="+query+"&format=JSON",function(data)
+		$.get("http://localhost:3030/ds?query="+query+"&format=JSON",function(data)
 		{
 			//$("#results").text(JSON.stringify(data));
 
 			var tableTag = "<table>";
 			
+			
 			var header = data.head.vars;
-			var list_value = data.results.binding
+			var list_value = data.results.bindings
 			for(var i=0;i<header.length;i++)
 			{
 				var title = header[i];
-				tableTag = tableTag + "<th>"+title+"</th>";
-			}
+				var tableTag = tableTag+"<tr><th>"+title+"</th></tr>";
+				for(var j=0;j<list_value.length;j++)
+				{
+				    
+					var value = data.results.bindings[j][title].value;
+					tableTag = tableTag + "<tr><td>"+value+"</td></tr>";
+
+				}
+							}
 			//process the contents here
 
 			tableTag = tableTag + "</table>";
 
-			$("#results").append(tableTag);
+			$("#results").html(tableTag);
 		})
 		})
 
