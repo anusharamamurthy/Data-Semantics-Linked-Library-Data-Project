@@ -23,14 +23,14 @@ $(document).ready(function()
 
 		$("#do_query").on("click",function(e)
 		{
-			var query1 = $("#query").val();
-			var query = "Prefix bf: <http://bibframe.org/vocab/> select distinct ?Main_Title where { ?x bf:authorizedAccessPoint ?Main_Title.}"
+			//var query1 = $("#query").val();
+			var query = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns%23> prefix rdfs: <http://www.w3.org/2000/01/rdf-schema%23> prefix bf: <http://bibframe.org/vocab/> select distinct ?Title ?About where { ?x rdf:type bf:InstanceTitle. ?x bf:mainTitle ?Title. ?x rdfs:label ?About. }";
 			var url_encoded_query = encodeURI(query);
 
 		//http://localhost:3030/Iowa_Library/query
 		$.get("http://localhost:3030/ds?query="+query+"&format=JSON",function(data)
 		{
-			//$("#results").text(JSON.stringify(data));
+			$("#results").text(JSON.stringify(data));
 
 			var tableTag="<tbody><tr>";
 			
@@ -40,7 +40,9 @@ $(document).ready(function()
 			for(var i=0;i<header.length;i++)
 			{
 				var title = header[i];
-				var tableTag = tableTag+"<td class=\"col-md-4\"><kbd>"+title+"</kbd></td>";
+				//var tableTag = "";
+				//tableTag = tableTag + "<tr>"
+				tableTag = tableTag+"<td class=\"col-md-4\"><kbd>"+title+"</kbd></td>";
 				tableTag = tableTag + "<td><span>";
 				tableTag = tableTag + "<ul>";
 				for(var j=0;j<list_value.length;j++)
@@ -52,15 +54,19 @@ $(document).ready(function()
 				}
 				
 			//	tableTag = tableTag+"</span></td></tr>";   for multiple main_title values
+			//tableTag+="</tr>"
+			tableTag = tableTag+"</span></td></tr>";
  				
 	         }
 			//process the contents here
 
-			tableTag = tableTag+"</span></td></tr>";
+			//tableTag = tableTag+"</span></td></tr>";
 			tableTag = tableTag + "</tbody>";
 
 			$("#results").html(tableTag);
-		})
+		}),function(error){
+			console.log(error);
+		}
 		})
 
 		
@@ -87,7 +93,7 @@ $(document).ready(function()
     <table class="table table-hover" id="results">
         <thead>
             <tr>
-                <th>Property</th>
+                <th id="title_place">Property</th>
                 <th>Value</th>
                 
             </tr>
