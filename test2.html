@@ -13,7 +13,22 @@
 		//http://localhost:3030/Iowa_Library/query
 		$.get("http://localhost:3030/Iowa_Library?query="+query+"&format=JSON",function(data)
 		{
-			$("#results").text(JSON.stringify(data));
+			//$("#results").text(JSON.stringify(data));
+
+			var tableTag = "<table>";
+			
+			var header = data.head.vars;
+			var list_value = data.results.binding
+			for(var i=0;i<header.length;i++)
+			{
+				var title = header[i];
+				tableTag = tableTag + "<th>"+title+"</th>";
+			}
+			//process the contents here
+
+			tableTag = tableTag + "</table>";
+
+			$("#results").append(tableTag);
 		})
 		})
 
