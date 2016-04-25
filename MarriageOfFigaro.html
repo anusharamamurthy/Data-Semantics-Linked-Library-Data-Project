@@ -1,0 +1,106 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>University of Iowa Library </title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+<!-- For Fonts Start-->
+<link href='https://fonts.googleapis.com/css?family=Josefin+Sans' rel='stylesheet' type='text/css'>
+<style>
+      td {
+        font-family: 'Josefin Sans', sans-serif;
+        font-size: 20px;
+      }
+</style>
+<!-- For Fonts over-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-1.12.3.js" integrity="sha256-1XMpEtA4eKXNNpXcJ1pmMPs8JV+nwLdEqwiJeCQEkyc=" crossorigin="anonymous"></script>
+<script type="text/javascript">
+$(document).ready(function()
+	{
+
+		$("#do_query").on("click",function(e)
+		{
+			var query1 = $("#query").val();
+			var query = "Prefix bf: <http://bibframe.org/vocab/> select distinct ?Main_Title where { ?x bf:authorizedAccessPoint ?Main_Title.}"
+			var url_encoded_query = encodeURI(query);
+
+		//http://localhost:3030/Iowa_Library/query
+		$.get("http://localhost:3030/ds?query="+query+"&format=JSON",function(data)
+		{
+			//$("#results").text(JSON.stringify(data));
+
+			var tableTag="<tbody><tr>";
+			
+			
+			var header = data.head.vars;
+			var list_value = data.results.bindings
+			for(var i=0;i<header.length;i++)
+			{
+				var title = header[i];
+				var tableTag = tableTag+"<td class=\"col-md-4\"><kbd>"+title+"</kbd></td>";
+				tableTag = tableTag + "<td><span>";
+				tableTag = tableTag + "<ul>";
+				for(var j=0;j<list_value.length;j++)
+				{
+				    
+					var value = data.results.bindings[j][title].value;
+					// tableTag = tableTag + "<td><span>"+value+", "; Since we want all values to come in one column
+					tableTag = tableTag + "<li>"+value+"</li><br> ";
+				}
+				
+			//	tableTag = tableTag+"</span></td></tr>";   for multiple main_title values
+ 				
+	         }
+			//process the contents here
+
+			tableTag = tableTag+"</span></td></tr>";
+			tableTag = tableTag + "</tbody>";
+
+			$("#results").html(tableTag);
+		})
+		})
+
+		
+	})
+
+
+</script>
+</head>
+
+<style type="text/css">
+    .tab{
+    	margin: 20px;
+    }
+</style>
+</head>
+<body>
+
+<div class="jumbotron">
+    <h1 class ="text-center">The Marriage of Figaro (Opera)</h1>
+    <p class = "container">Le Nozze di Figaro : The marriage of Figaro = Die Hochzeit des Figaro = Les noces de Figaro : K. 492, Wolfgang Amadeus Mozart ; commedia per musica in quattro atti di Lorenzo Da Ponte
+</p> 
+<div>
+<div class="container">
+    <table class="table table-hover" id="results">
+        <thead>
+            <tr>
+                <th>Property</th>
+                <th>Value</th>
+                
+            </tr>
+        </thead>
+
+<body>
+
+<!-- <input type="textbox" id="query" /><br /> -->
+<center> 
+	<button type="button" id="do_query" class="btn btn-primary btn-lg"> Show LOD </button> 
+	<p></p>
+</center>
+
+</div>
+</body>
+</html>
