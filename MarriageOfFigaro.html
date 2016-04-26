@@ -26,7 +26,9 @@ $(document).ready(function()
 			//var query1 = $("#query").val();
 			//var query = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> prefix rdfs: <http://www.w3.org/2000/01/rdf-schema%23> prefix bf: <http://bibframe.org/vocab/> select distinct ?Title ?Title_Statement where { ?x rdf:type bf:InstanceTitle. ?x bf:mainTitle ?Title. ?x rdfs:label ?Title_Statement. }";
 
-			var query = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>  prefix relators: <http://id.loc.gov/vocabulary/relators> prefix bf: <http://bibframe.org/vocab/> prefix madsrdf: <http://www.loc.gov/mads/rdf/v1#> select ?Translation_Of  ?Related_Works where { ?instance rdf:type bf:Instance. ?instance bf:instanceOf ?instanceof. ?instanceof bf:translationOf ?translationof. ?translationof madsrdf:authoritativeLabel ?Translation_Of. ?instanceof bf:relatedWork ?relatedWork. ?relatedWork bf:authorizedAccessPoint ?Related_Works. }";
+			//var query = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>  prefix relators: <http://id.loc.gov/vocabulary/relators> prefix bf: <http://bibframe.org/vocab/> prefix madsrdf: <http://www.loc.gov/mads/rdf/v1#> select ?Translation_Of  ?Related_Works where { ?instance rdf:type bf:Instance. ?instance bf:instanceOf ?instanceof. ?instanceof bf:translationOf ?translationof. ?translationof madsrdf:authoritativeLabel ?Translation_Of. ?instanceof bf:relatedWork ?relatedWork. ?relatedWork bf:authorizedAccessPoint ?Related_Works. }";
+
+			var query = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>  prefix relators: <http://id.loc.gov/vocabulary/relators> prefix bf: <http://bibframe.org/vocab/> prefix madsrdf: <http://www.loc.gov/mads/rdf/v1#> select ?Genre ?Translation_Of ?Related_Works ?Music_Version ?Held_By ?Location ?Publisher ?Mode_Of_Issuance ?Pages ?Dimensions where { ?instance rdf:type bf:Instance. ?instance bf:instanceOf ?instanceof. ?instanceof bf:translationOf ?translationof. ?translationof madsrdf:authoritativeLabel ?Translation_Of. ?instanceof bf:relatedWork ?relatedWork. ?relatedWork bf:authorizedAccessPoint ?Related_Works. ?instance bf:providerStatement ?Publisher. ?instance bf:modeOfIssuance ?Mode_Of_Issuance. ?instance bf:extent ?Pages. ?instance bf:dimensions ?Dimensions. ?heldby rdf:type bf:Organization. ?heldby rdfs:label ?Held_By. ?location rdf:type bf:Item. ?location bf:subLocation ?Location. ?genre rdf:type bf:Topic. ?genre bf:authorizedAccessPoint ?Genre. ?text rdf:type bf:Text. ?text bf:musicVersion ?Music_Version. }"
 
 			query = query.replace(/#/g,"%23");
 			var url_encoded_query = encodeURI(query);
@@ -44,7 +46,7 @@ $(document).ready(function()
 			for(var i=0;i<header.length;i++)
 			{
 				var title = header[i];
-				var str = title.replace("_"," ");
+				var str = title.replace(/_/g," ");
 				//var tableTag = "";
 				//tableTag = tableTag + "<tr>"
 				tableTag = tableTag+"<td class=\"col-md-4\"><kbd>"+str+"</kbd></td>";
