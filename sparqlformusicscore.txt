@@ -1,0 +1,20 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX bf: <http://bibframe.org/vocab/>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix relators: <http://id.loc.gov/vocabulary/relators>
+
+select ?Title ?OtherName ?Music ?Score ?ItemIdentifier
+where {
+  ?x rdf:type bf:Work.
+  ?x bf:authorizedAccessPoint ?Title
+    filter regex(?Title,"^Mozart, Wolfgang Amadeus, 1756-1791 Nozze di Figaro. Selections; arranged").
+  ?x bf:title ?y.
+    ?y rdfs:label ?OtherName.
+  ?x bf:subject ?z.
+    ?z bf:authorizedAccessPoint ?Music.
+  ?instance rdf:type bf:Instance.
+    ?instance bf:extent ?Score.
+  ?item rdf:type bf:Item.
+  	?item bf:identifiedBy ?a.
+    	?a rdf:value ?ItemIdentifier
+}
